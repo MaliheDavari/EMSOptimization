@@ -17,35 +17,32 @@ Minimizing the operation cost including the cost of buying electricity from the 
 5) Consider ramp-up and ramp-down constraints on both DGs
 
 **Decision variables:**
-$$P_{\text{grid}}(t), \quad P_{\text{res}}(t,i), \quad P(t,g), \quad P_{\text{s\_disch}}(t), \quad \text{and}  \quad P_{\text{s\_ch}}(t) \in \mathbb{R}^{+}$$
+<p><i>P<sub>grid</sub>(t)</i>, <i>P<sub>res</sub>(t,i)</i>, <i>P(t,g)</i>, <i>P<sub>s_disch</sub>(t)</i>, and <i>P<sub>s_ch</sub>(t)</i> &in; <b>R</b><sup>+</sup></p>
 
 
 **Mathematical formulation:**
 
 **Objective Function**
-$$\min \text{ cost} = \sum_{t} \left( (P_{\text{grid}}(t) \cdot \Delta t) \cdot price_{\text{\_grid}} + \sum_{g} (price_{p_gen} \cdot P_{gen}(t) + price_{c,gen}) \right)$$
+
+<p>min cost = &sum;<sub>t</sub> { (<i>P<sub>grid</sub>(t) &middot; &Delta;t</i>) &middot; price<sub>grid</sub> + &sum;<sub>g</sub> (price<sub>p_gen</sub> &middot; P<sub>gen</sub>(t) + price<sub>c,gen</sub>) }</p>
+
 
 ## Constraints
 
-**Power Balance**   $$\sum_{i} P_{\text{res}}(t,i) + \sum_{g} P(g,t) + P_{\text{grid}}(t) + (P_{\text{s\_disch}}(t) - P_{\text{s\_ch}}(t)) = P_{\text{load}}(t), \quad \forall t$$
+**Power Balance**  <p>&sum;<sub>i</sub> P<sub>res</sub>(t,i) + &sum;<sub>g</sub> P(g,t) + P<sub>grid</sub>(t) + (P<sub>s_disch</sub>(t) - P<sub>s_ch</sub>(t)) = P<sub>load</sub>(t), &forall; t</p>
+<p>0 &le; P<sub>grid</sub>(t) &le; P<sub>grid_max</sub>, &forall; t</p>
+<p>0 &le; P<sub>gen</sub>(g,t) &le; P<sub>gen_max</sub>(g,t), &forall; t,g</p>
+<p>0 &le; P<sub>res</sub>(t,i) &le; P<sub>res_max</sub>(t,i), &forall; t,i</p>
 
-$$0 \leq P_{\text{grid}}(t) \leq P_{\text{grid\_max}}, \quad \forall t$$
-
-
-$$0 \leq P_{\text{gen}}(g,t) \leq P_{\text{gen\_max}}(g,t), \quad \forall t,g$$
-$$0 \leq P_{\text{res}}(t,i) \leq P_{\text{res\_max}}(t,i), \quad \forall t,i$$
 
 **Round Up and Round Down Powers for Generators**
-$$P_{\text{gen}}(g,t+1) - P_{\text{gen}}(g,t) \leq RU_{\text{gen}}(g), \quad \forall t,g$$
-$$P_{\text{gen}}(g,t-1) - P_{\text{gen}}(g,t) \leq RD_{\text{gen}}(g), \quad \forall t,g$$
+<p>P<sub>gen</sub>(g,t+1) - P<sub>gen</sub>(g,t) &le; RU<sub>gen</sub>(g), &forall; t,g</p>
+<p>P<sub>gen</sub>(g,t-1) - P<sub>gen</sub>(g,t) &le; RD<sub>gen</sub>(g), &forall; t,g</p>
 
 
-** Battery Storage**
-$$SoC(t) = SoC(t-1) + \frac{\eta_{\text{s\_ch}}}{CAP} (P_{\text{s\_ch}}(t) \cdot \Delta t) - \frac{1}{\eta_{\text{s\_disch}} \cdot CAP} (P_{\text{s\_disch}}(t) \cdot \Delta t), \quad \forall t$$
 
-
-$$0 \leq P_{\text{s\_ch}}(t) \leq P_{\text{s\_ch\_max}} \times X_{\text{s}}(t), \quad \forall t$$
-
-$$0 \leq P_{\text{s\_disch}}(t) \leq P_{\text{s\_disch\_max}} \times (1 - X_{\text{s}}(t)), \quad \forall t$$
-$$SoC_{\text{min}} \leq SoC(t) \leq SoC_{\text{max}}, \quad \forall t$$
-
+**Battery Storage**
+<p>SoC(t) = SoC(t-1) + <sup>&eta;<sub>s_ch</sub></sup>&frasl;<sub>CAP</sub> (P<sub>s_ch</sub>(t) &middot; &Delta;t) - <sup>1</sup>&frasl;<sub>&eta;<sub>s_disch</sub> &middot; CAP</sub> (P<sub>s_disch</sub>(t) &middot; &Delta;t), &forall; t</p>
+<p>0 &le; P<sub>s_ch</sub>(t) &le; P<sub>s_ch_max</sub> &times; X<sub>s</sub>(t), &forall; t</p>
+<p>0 &le; P<sub>s_disch</sub>(t) &le; P<sub>s_disch_max</sub> &times; (1 - X<sub>s</sub>(t)), &forall; t</p>
+<p>SoC<sub>min</sub> &le; SoC(t) &le; SoC<sub>max</sub>, &forall; t</p>
