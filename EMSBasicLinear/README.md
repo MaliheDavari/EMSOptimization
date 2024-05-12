@@ -17,25 +17,21 @@ Minimizing the operation cost including the cost of buying electricity from the 
 5) Consider ramp-up and ramp-down constraints on both DGs
 
 **Decision variables:**
-$$P_{\text{grid}}(t), \quad P_{\text{res}}(t,i), \quad \text{and} \quad P(t,g) \in \mathbb{R}^{+}$$
-
+<p><i>P<sub>grid</sub>(t)</i>, <i>P<sub>res</sub>(t,i)</i>, and <i>P<sub>gen</sub>(t,g)</i> &isin; <b>R</b><sup>+</sup></p>
 
 **Mathematical formulation:**
 
 **Objective Function**
-$$\min \text{ cost} = \sum_{t} \left( (P_{\text{grid}}(t) \cdot \Delta t) \cdot price_{\text{\_grid}} + \sum_{g} (price_{p_gen} \cdot P_{gen}(t) + price_{c,gen}) \right)$$
+<p>min cost = &sum;<sub>t</sub> { (<i>P<sub>grid</sub>(t) &middot; &Delta;t</i>) &middot; price<sub>grid</sub> + &sum;<sub>g</sub> (price<sub>p_gen</sub> &middot; P<sub>gen</sub>(t) + price<sub>c,gen</sub>) }</p>
 
 ## Constraints
 
-**Power Balance**   $$\sum_{i} P_{\text{res}}(t,i) + \sum_{g} P(g,t) + P_{\text{grid}}(t) = P_{\text{load}}(t), \quad \forall t$$
-
-$$0 \leq P_{\text{grid}}(t) \leq P_{\text{grid\_max}}, \quad \forall t$$
-
-
-$$0 \leq P_{\text{gen}}(g,t) \leq P_{\text{gen\_max}}(g,t), \quad \forall t,g$$
-$$0 \leq P_{\text{res}}(t,i) \leq P_{\text{res\_max}}(t,i), \quad \forall t,i$$
+**Power Balance**   <p>&sum;<sub>i</sub> P<sub>res</sub>(t,i) + &sum;<sub>g</sub> P(g,t) + P<sub>grid</sub>(t) = P<sub>load</sub>(t), &forall; t</p>
+<p>0 &le; P<sub>grid</sub>(t) &le; P<sub>grid_max</sub>, &forall; t</p>
+<p>0 &le; P<sub>gen</sub>(g,t) &le; P<sub>gen_max</sub>(g,t), &forall; t,g</p>
+<p>0 &le; P<sub>res</sub>(t,i) &le; P<sub>res_max</sub>(t,i), &forall; t,i</p>
 
 **Round Up and Round Down Powers for Generators:**
-$$P_{\text{gen}}(g,t+1) - P{\text{gen}}(g,t) \leq RU_{\text{gen}}(g), \quad \forall t,g$$
-$$P_{\text{gen}}(g,t-1) - P{\text{gen}}(g,t) \leq RD_{\text{gen}}(g), \quad \forall t,g$$
+<p>P<sub>gen</sub>(g,t+1) - P<sub>gen</sub>(g,t) &le; RU<sub>gen</sub>(g), &forall; t,g</p>
+<p>P<sub>gen</sub>(g,t-1) - P<sub>gen</sub>(g,t) &le; RD<sub>gen</sub>(g), &forall; t,g</p>
 
